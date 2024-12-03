@@ -39,11 +39,44 @@ def success():
     email = request.args.get('email')
     return render_template('success.html', username=username, email=email)
 
-@app.route('/users')
+# We add here functionality for Updating users
+'''
+*** We have two methods: GET and POST
+*** If the request is POST we get the ID and the new email for the user.
+*** We update the email for the user we got based on their ID.
+*** And we redirect to the users page.
+*** For GET requests it renders the HTML users template to display the users list.
+'''
+@app.route('/users', methods=['GET', 'POST'])
 def users():
+    if request.method == 'POST':
+        user_id = request.form.get('user_id')
+        new_email = request.form.get('new_email')
+        user_to_update = User.query.get(user_id)
+        # check if the user exists
+        if user_to_update:
+            user_to_update.email = new_email
+            db.session.commit()
+        return redirect(url_for('users'))
+    
     #retrieve all records from the User table in the db
     all_users = User.query.all()
     return render_template('users.html', users=all_users)
+
+# We add functionality for Deleting users
+'''
+*** We get the user from the database based on requests id.
+*** If the user exists we remove them from the database.
+*** We redirect to the users list where user with wanted id has been removed.
+'''
+@app.route('/delete_user/<int:id>', methods=['POST'])
+def delete_user(id):
+    user = User.query.get(id)
+    # check if the user exists
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+    return redirect(url_for('users'))
 
 if __name__ == '__main__':
     app.run(debug=True)

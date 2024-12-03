@@ -49,8 +49,10 @@ def add_data():
 @app.route('/chart')
 def chart():
     # Retrieve data from the database
-    
-    return render_template('chart.html')
+    data = HealthData.query.all()
+    dates = [entry.date.strftime('%Y-%m-%d') for entry in data]
+    exercise = [entry.exercise for entry in data]
+    return render_template('chart.html', dates=dates, exercise=exercise)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -5,5 +5,17 @@
 </head>
 <body>
     <h1>Enter Your Name</h1>
+    <!-- We add a form with:
+     *** hidden_tag: Generates hidden fields required for CSRF protection (Cross Site Request Forgery).
+         Flask-WTF automatically adds this protection to our form via this tag.
+     *** form.name.label: Generates an HTML label for the name field.
+     *** form.name: Renders the input field for the name with a field width of 20 characters. It generates an HTML input element of type text.
+     *** form.submit: Renders the submit button. It generates an HTML input element of type submit.
+     -->
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.name.label}}{{form.name(size=20)}}
+        {{form.submit()}}
+    </form>
 </body>
 </html>

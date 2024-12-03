@@ -7,21 +7,23 @@
     <h1>Registered Users</h1>
     <ul>
         {% for user in users %}
-        <li>{{ user.username }} - {{ user.email }}
-        <!-- update user email -->
-        <form method="POST" action="/users" style="display:inline;">
-            <input type="hidden" name="user_id" value="{{ user.id }}">
-            <input type="email" name="new_email" placeholder="New Email" required>
-            <input type="submit" value="Update">
-        </form>
-        <!-- delete user -->
-        <form method="POST" action="/delete_user/{{ user.id }}" style="display:inline;">
-            <input type="submit" value="Delete">
-        </form>
-
+        <li>
+            {{ user.username }} - {{ user.email }}
+            
+            <!-- update user email -->
+            <form method="POST" action="{{ url_for('users') }}" style="display:inline;">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <input type="email" name="new_email" placeholder="New Email" required>
+                <input type="submit" value="Update">
+            </form>
+            <!-- delete user -->
+            <form method="POST" action="{{ url_for('delete_user', id=user.id) }}" style="display:inline;">
+                <input type="submit" value="Delete">
+            </form>
+        
         </li>
         {% endfor %}
     </ul>
-    <a href="/form">Add a new user</a>
+    <a href="{{ url_for('form') }}">Add a new user</a>
 </body>
 </html>

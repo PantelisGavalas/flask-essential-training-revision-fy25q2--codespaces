@@ -1,10 +1,14 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from forms import HealthDataForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///health_data.db'
+# tries to get secret key from environment variables (best for security). 
+# If not found goes to 'our_secret_key'. 
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'My_First_Flask_App_0112358!')
+# tries to get db URL from environment variables. If not found it uses local sqlite database.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL', 'sqlite:///health_data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -19,6 +23,12 @@ class HealthData(db.Model):
     def __repr__(self):
         return f'<HealthData {self.id}>'
 
+# runs the view function below before the first request till the app is processed => 
+# for set up tasks needed before app starts handling requests.
+@app.before_first_request
+def create_tables():
+    db.create_all()
+    
 @app.route('/')
 def index():
     return render_template('index.html')

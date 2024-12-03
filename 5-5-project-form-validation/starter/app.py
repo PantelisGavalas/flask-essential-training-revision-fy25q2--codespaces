@@ -11,9 +11,13 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def form():
     form = HealthDataForm()
-    if request.method == 'POST':
+    if form.validate_on_submit():
         # Process form data here
-        
+        # We retrieve the data submitted from the form to store in the database later
+        date = form.date.data
+        exercise = form.exercise.data
+        meditation = form.meditation.data
+        sleep = form.sleep.data
         # Redirect to the dashboard
         return redirect(url_for('dashboard'))
     return render_template('form.html', form=form)

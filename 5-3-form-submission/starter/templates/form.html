@@ -1,15 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Flask Forms</title>
-</head>
-<body>
-    <h1>Enter Your Details</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.username.label }} {{ form.username(size=20) }}
-        {{ form.email.label }} {{ form.email(size=20) }}
-        {{ form.submit() }}
-      </form>
-</body>
+    <head>
+        <title>Flask Forms</title>
+    </head>
+    <body>
+        <h1>Enter Your Details</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }} {{ form.username.label }} {{
+            form.username(size=20) }} {{ form.email.label }} {{
+            form.email(size=20) }} {{ form.submit() }}
+        </form>
+    </body>
 </html>

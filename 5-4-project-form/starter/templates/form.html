@@ -1,30 +1,38 @@
-{% extends 'base.html' %}
-
-{% block title %}Enter Health Data{% endblock %}
-
-{% block content %}
-    <div class="card mx-auto" style="max-width: 500px;">
-        <div class="card-body">
-            <h2 class="card-title">Enter Your Health Data</h2>
-            <form method="POST">
-                <div class="form-group">
-                    <!-- date label goes here -->
-                    <!-- date input goes here -->
-                </div>
-                <div class="form-group">
-                    <!-- exercise label goes here -->
-                    <!-- exercise input goes here -->
-                </div>
-                <div class="form-group">
-                    <!-- meditation label goes here -->
-                    <!-- meditation input goes here -->
-                </div>
-                <div class="form-group">
-                    <!-- sleep label goes here -->
-                    <!-- sleep input goes here -->
-                </div>
-                <!-- submit button goes here -->
-            </form>
-        </div>
+{% extends 'base.html' %} {% block title %}Enter Health Data{% endblock %}
+{%block content %}
+<div class="card mx-auto" style="max-width: 500px">
+    <div class="card-body">
+        <h2 class="card-title">Enter Your Health Data</h2>
+        <form method="POST">
+            <!-- include hidden fields for CSRF protection -->
+            {{form.hidden_tag()}}
+            <div class="form-group">
+                <!-- date label goes here -->
+                {{form.date.label(class='form-label')}}
+                <!-- date input goes here -->
+                {{form.date(class='form-control')}}
+            </div>
+            <div class="form-group">
+                <!-- exercise label goes here -->
+                {{form.exercise.label(class='form-label')}}
+                <!-- exercise input goes here -->
+                {{form.exercise(class='form-control')}}
+            </div>
+            <div class="form-group">
+                <!-- meditation label goes here -->
+                {{form.meditation.label(class='form-label')}}
+                <!-- meditation input goes here -->
+                {{form.meditation(class='form-control')}}
+            </div>
+            <div class="form-group">
+                <!-- sleep label goes here -->
+                {{form.sleep.label(class='form-label')}}
+                <!-- sleep input goes here -->
+                {{form.sleep(class='form-control')}}
+            </div>
+            <!-- submit button goes here -->
+            {{form.submit(class='btn btn-primary btn-block')}}
+        </form>
     </div>
+</div>
 {% endblock %}
